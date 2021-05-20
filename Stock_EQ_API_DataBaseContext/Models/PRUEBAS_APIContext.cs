@@ -25,11 +25,13 @@ namespace Stock_EQ_API_DataBaseContext.Models
         public virtual DbSet<SammDepartamento> SammDepartamentos { get; set; }
         public virtual DbSet<SammEmpresa> SammEmpresas { get; set; }
         public virtual DbSet<TrcTercero> TrcTerceros { get; set; }
+        public virtual DbSet<VeqProdEcommerce> VeqProdEcommerces { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=172.16.100.14\\LAB;Database=PRUEBAS_API;User=labroides;Password=Labroides1234");
             }
         }
@@ -710,6 +712,42 @@ namespace Stock_EQ_API_DataBaseContext.Models
                     .WithMany(p => p.InverseTercIdpadreNavigation)
                     .HasForeignKey(d => d.TercIdpadre)
                     .HasConstraintName("FK_TRC_TERCERO_TRC_TERCERO");
+            });
+
+            modelBuilder.Entity<VeqProdEcommerce>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("veqProdEcommerce");
+
+                entity.Property(e => e.Bodega)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CentroOperativo).HasMaxLength(50);
+
+                entity.Property(e => e.DescripcionEcommerce).HasMaxLength(2000);
+
+                entity.Property(e => e.IdCentroOperativo).HasMaxLength(15);
+
+                entity.Property(e => e.IdEmpresa).HasMaxLength(50);
+
+                entity.Property(e => e.IdLista)
+                    .IsRequired()
+                    .HasMaxLength(5);
+
+                entity.Property(e => e.Moneda).HasMaxLength(10);
+
+                entity.Property(e => e.Nombre)
+                    .IsRequired()
+                    .HasMaxLength(150);
+
+                entity.Property(e => e.ProdIdproducto).HasColumnName("PROD_IDPRODUCTO");
+
+                entity.Property(e => e.Sku)
+                    .IsRequired()
+                    .HasMaxLength(45)
+                    .HasColumnName("SKU");
             });
 
             OnModelCreatingPartial(modelBuilder);
