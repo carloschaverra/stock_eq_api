@@ -33,21 +33,44 @@ namespace Stock_EQ_API_Business.Repository
                         , @DOC_IMPUESTOMENOS, @DOC_IMPUESTOMENOS_ME, @DOC_NDECIMALES_ME
                         , @DOC_PORCDESCUENTO, @DOC_TOTAL_ME, @DOC_TOTALCONIMPUESTO
                         , @DOC_TOTALCONIMPUESTO_ME, @DOC_VLRTRM, @DOC_SUBTOTAL_ME
-                        , COT_IDASESOR, @DOC_IDLISTA, @DOC_DTOXITEM
-                        , @DOC_APLICAIVA, ORT_CTOTAL, @DOC_IDMEDIOPAGO
+                        , @COT_IDASESOR, @DOC_IDLISTA, @DOC_DTOXITEM
+                        , @DOC_APLICAIVA, @ORT_CTOTAL, @DOC_IDMEDIOPAGO
                         , @DOC_DIRECCIONENTREGA, @DOC_IDCIUDADENTREGA, @DOC_IDCOP
-                        , @DOC_IDUSUMODIFICA, @DOC_NUMERO, @idProceso";
-                
+                        , @DOC_IDUSUMODIFICA, @DOC_EMAILCLIENTE, @DOC_NUMERO, @idProceso";
+
                 context = new PRUEBAS_APIContext();
                 ValidateDocumentRequest(documentRequest);
                 SetDefaultValues(ref documentRequest);
                 guid = InsertDocumentsItem(documentRequest.Items);
                 parameters = SetParametersSpPedidoVentaInsertCompleto1(documentRequest, guid);
-                iResult = context.Database.ExecuteSqlRaw(sSql, parameters);
+                context.Database.ExecuteSqlRaw(sSql, parameters);
+                iResult = DeleteDocumentsItem(guid);
             }
             catch (Exception)
             {
                 iResult = -1;
+                throw;
+            }
+            return iResult;
+        }
+
+        private int DeleteDocumentsItem(Guid guid)
+        {
+            int iResult = 0;
+            List<EqPedidoApi> listaEqPedidoApi = new List<EqPedidoApi>();
+            PRUEBAS_APIContext context;
+            try
+            {
+                context = new PRUEBAS_APIContext();
+                listaEqPedidoApi = context.EqPedidoApis.Where(p => p.IdProceso == guid).ToList();
+
+                foreach (EqPedidoApi item in listaEqPedidoApi)
+                    context.EqPedidoApis.Remove(item);
+
+                iResult = context.SaveChanges();
+            }
+            catch (Exception)
+            {
                 throw;
             }
             return iResult;
@@ -84,7 +107,7 @@ namespace Stock_EQ_API_Business.Repository
                 parameters.Add(new SqlParameter() { ParameterName = "@DOC_PREFIJO", 
                                                     SqlDbType =  System.Data.SqlDbType.NVarChar, 
                                                     Size = 10,
-                                                    Direction = System.Data.ParameterDirection.Output,
+                                                    Direction = System.Data.ParameterDirection.Input,
                                                     Value = documentRequest.Prefijo });
 
                 parameters.Add(new SqlParameter() { ParameterName = "@DOC_IDEMPRESA", 
