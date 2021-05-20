@@ -1,0 +1,24 @@
+﻿<h1>Consumo del endpoint de <i>Empresas</i></h1>
+<h3>Datos retornados:</h3>
+<div id="target"></div>
+<script>
+    const url = "https://localhost:44314/api/v1/empresas/05";
+
+    fetch(url).then(response => response.json())
+        .then(data => {
+            let target = document.getElementById('target');
+
+            let _nit = data.saemNitverdadero
+
+            let nit = _nit.substring(0, 9)
+            let dv = _nit.substring(11, 10)
+
+            target.innerHTML = `<p>ID: <i>${ data.saemNit }</i></p>
+                                <p>NIT: <i>${ nit }</i></p>
+                                <p>DV: <i>${ dv }</i></p>
+                                <p>Nombre: <i>${ data.saemNombre }</i></p>
+                                <p>Prefijo empresa: <i>${data.saemTiporegimen }</i></p>`;
+
+            console.log(data)
+        }).catch(err => console.log(err))
+</script>

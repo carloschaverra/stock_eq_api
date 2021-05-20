@@ -1,0 +1,17 @@
+﻿<h1>Vista de consumo</h1>
+<h3>Datos retornados:</h3>
+<div id="target"></div>
+<script>
+    const url = "https://localhost:44314/api/v1/prefijos/CM-ETBTA";
+
+    fetch(url).then(response => response.json())
+        .then(data => {
+            let target = document.getElementById('target');
+            target.innerHTML = `<p>Prefijo: <i>${data.dctpPrefijo }</i></p>
+                                <p>Nombre: <i>${data.dctpNombre}</i></p>
+                                <p>Tipo: <i>${data.dctpIdtipo}</i></p>
+                                <p>Flujo: <i>${data.dctpIdflujo}</i></p>`;
+
+            console.log(data)
+        }).catch(err => console.log(err))
+</script>
