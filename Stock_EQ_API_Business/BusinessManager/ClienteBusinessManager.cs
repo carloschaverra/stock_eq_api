@@ -1,7 +1,9 @@
 ﻿using Stock_EQ_API_Business.IRepository;
 using Stock_EQ_API_Business.Repository;
 using Stock_EQ_API_Business.Response;
+using Stock_EQ_API_DataBaseContext.Models;
 using Stock_EQ_API_DataBaseContext.Requests;
+using Stock_EQ_API_DTO.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,7 @@ namespace Stock_EQ_API_Business.BusinessManager
             IGeneralResponseRepository generalResponseRepository = new GeneralResponseRespository();
             IClientesRepository clientesRepository;
             GeneralResponse generalResponse;
-            object oResponse;
+            ClienteRS oResponse;
 
             try
             {

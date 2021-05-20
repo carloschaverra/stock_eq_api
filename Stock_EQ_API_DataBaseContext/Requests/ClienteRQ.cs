@@ -10,5 +10,8 @@ namespace Stock_EQ_API_DataBaseContext.Requests
     {
         public string Documento { get; set; }
         public string RazonSocial { get; set; }
+        public bool? EsCliente { get; set; }
+        public bool? EsUsuario { get; set; }
+        public bool? EsProveedor { get; set; }
     }
 }
