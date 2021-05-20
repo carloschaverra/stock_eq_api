@@ -22,13 +22,13 @@ namespace Stock_EQ_API.Controllers
         [HttpGet]
         public IEnumerable<LabCentrooperacion> GetCentros()
         {
-            return _context.LabCentrosOperacion.Take(50).ToList();
+            return _context.LabCentrooperacions.Take(50).ToList();
         }
 
         [HttpGet("{id}")]
         public LabCentrooperacion GetCentro(string id)
         {
-            return _context.LabCentrosOperacion.Find(id);
+            return _context.LabCentrooperacions.Find(id);
         }
     }
 }
