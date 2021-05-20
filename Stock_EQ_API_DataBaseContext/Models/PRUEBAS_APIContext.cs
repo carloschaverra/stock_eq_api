@@ -21,6 +21,11 @@ namespace Stock_EQ_API_DataBaseContext.Models
         public virtual DbSet<VeqProdEcommerce> VeqProdEcommerces { get; set; }
         public virtual DbSet<TrcTercero> TrcTerceros { get; set; }
         public virtual DbSet<SammEmpresa> SammEmpresas { get; set; }
+        public virtual DbSet<DocPrefijo> DocPrefijos { get; set; }
+        public virtual DbSet<LabCentrocosto> LabCentrocostos { get; set; }
+        public virtual DbSet<LabCentrooperacion> LabCentrosOperacion { get; set; }
+        public virtual DbSet<LabUnidadnegocio> LabUnidadesNegocio { get; set; }
+        public virtual DbSet<SammDepartamento> SammDepartamentos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -558,6 +563,198 @@ namespace Stock_EQ_API_DataBaseContext.Models
                 entity.Property(e => e.SaemTiporegimen)
                     .HasMaxLength(20)
                     .HasColumnName("SAEM_TIPOREGIMEN");
+            });
+
+            modelBuilder.Entity<DocPrefijo>(entity =>
+            {
+                entity.HasKey(e => e.DctpPrefijo)
+                    .HasName("PK_DOC_TIPO");
+
+                entity.ToTable("DOC_PREFIJO");
+
+                entity.HasIndex(e => e.DctpIdtipo, "IX_DOC_PREFIJO");
+
+                entity.Property(e => e.DctpPrefijo)
+                    .HasMaxLength(10)
+                    .HasColumnName("DCTP_PREFIJO");
+
+                entity.Property(e => e.DctpAnexodefault)
+                    .HasMaxLength(300)
+                    .HasColumnName("DCTP_ANEXODEFAULT");
+
+                entity.Property(e => e.DctpCalculaAui).HasColumnName("DCTP_CALCULA_AUI");
+
+                entity.Property(e => e.DctpFormato)
+                    .HasMaxLength(400)
+                    .HasColumnName("DCTP_FORMATO");
+
+                entity.Property(e => e.DctpFormatofull)
+                    .HasMaxLength(400)
+                    .HasColumnName("DCTP_FORMATOFULL");
+
+                entity.Property(e => e.DctpIdflujo)
+                    .HasMaxLength(50)
+                    .HasColumnName("DCTP_IDFLUJO");
+
+                entity.Property(e => e.DctpIdtempariodefault).HasColumnName("DCTP_IDTEMPARIODEFAULT");
+
+                entity.Property(e => e.DctpIdtipo)
+                    .IsRequired()
+                    .HasMaxLength(5)
+                    .HasColumnName("DCTP_IDTIPO");
+
+                entity.Property(e => e.DctpNombre)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("DCTP_NOMBRE");
+
+                entity.Property(e => e.DctpPrecio)
+                    .HasColumnName("DCTP_PRECIO")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.DctpPuedediagramar).HasColumnName("DCTP_PUEDEDIAGRAMAR");
+
+                entity.Property(e => e.DctpSolmaquina).HasColumnName("DCTP_SOLMAQUINA");
+
+                entity.Property(e => e.DctpVercliente).HasColumnName("DCTP_VERCLIENTE");
+
+                entity.Property(e => e.DctpVersucursal).HasColumnName("DCTP_VERSUCURSAL");
+            });
+
+            modelBuilder.Entity<LabCentrocosto>(entity =>
+            {
+                entity.HasKey(e => e.LbccIdcentrocosto);
+
+                entity.ToTable("LAB_CENTROCOSTO");
+
+                entity.Property(e => e.LbccIdcentrocosto)
+                    .HasMaxLength(20)
+                    .HasColumnName("LBCC_IDCENTROCOSTO");
+
+                entity.Property(e => e.LbccAreametros).HasColumnName("LBCC_AREAMETROS");
+
+                entity.Property(e => e.LbccCodalterno)
+                    .HasMaxLength(50)
+                    .HasColumnName("LBCC_CODALTERNO");
+
+                entity.Property(e => e.LbccEsdistribuido).HasColumnName("LBCC_ESDISTRIBUIDO");
+
+                entity.Property(e => e.LbccIdempresa)
+                    .HasMaxLength(50)
+                    .HasColumnName("LBCC_IDEMPRESA");
+
+                entity.Property(e => e.LbccIdpadre)
+                    .HasMaxLength(20)
+                    .HasColumnName("LBCC_IDPADRE");
+
+                entity.Property(e => e.LbccKgprod).HasColumnName("LBCC_KGPROD");
+
+                entity.Property(e => e.LbccNextensiones).HasColumnName("LBCC_NEXTENSIONES");
+
+                entity.Property(e => e.LbccNombre)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("LBCC_NOMBRE");
+
+                entity.Property(e => e.LbccNpersonas).HasColumnName("LBCC_NPERSONAS");
+
+                entity.Property(e => e.LbccNusuarios).HasColumnName("LBCC_NUSUARIOS");
+
+                entity.Property(e => e.LbccUnidprod).HasColumnName("LBCC_UNIDPROD");
+
+                entity.Property(e => e.LbccVentapresupuestada).HasColumnName("LBCC_VENTAPRESUPUESTADA");
+
+                entity.Property(e => e.LbccVentareal).HasColumnName("LBCC_VENTAREAL");
+            });
+
+            modelBuilder.Entity<LabCentrooperacion>(entity =>
+            {
+                entity.HasKey(e => e.LbcoIdcentroperacion);
+
+                entity.ToTable("LAB_CENTROOPERACION");
+
+                entity.Property(e => e.LbcoIdcentroperacion)
+                    .HasMaxLength(15)
+                    .HasColumnName("LBCO_IDCENTROPERACION");
+
+                entity.Property(e => e.LbcoDireccion)
+                    .HasMaxLength(150)
+                    .HasColumnName("LBCO_DIRECCION");
+
+                entity.Property(e => e.LbcoNombre)
+                    .HasMaxLength(50)
+                    .HasColumnName("LBCO_NOMBRE");
+
+                entity.Property(e => e.LbcoTelefono)
+                    .HasMaxLength(80)
+                    .HasColumnName("LBCO_TELEFONO");
+            });
+
+            modelBuilder.Entity<LabUnidadnegocio>(entity =>
+            {
+                entity.HasKey(e => e.LbunIdun);
+
+                entity.ToTable("LAB_UNIDADNEGOCIO");
+
+                entity.Property(e => e.LbunIdun)
+                    .HasMaxLength(50)
+                    .HasColumnName("LBUN_IDUN");
+
+                entity.Property(e => e.LbunIdcentrooperaciones)
+                    .HasMaxLength(20)
+                    .HasColumnName("LBUN_IDCENTROOPERACIONES");
+
+                entity.Property(e => e.LbunNombre)
+                    .HasMaxLength(200)
+                    .HasColumnName("LBUN_NOMBRE");
+            });
+
+            modelBuilder.Entity<SammDepartamento>(entity =>
+            {
+                entity.HasKey(e => e.SmdpIddepartamento);
+
+                entity.ToTable("SAMM_DEPARTAMENTO");
+
+                entity.Property(e => e.SmdpIddepartamento)
+                    .HasMaxLength(10)
+                    .HasColumnName("SMDP_IDDEPARTAMENTO");
+
+                entity.Property(e => e.SmdpBodegafacturacion)
+                    .HasMaxLength(50)
+                    .HasColumnName("SMDP_BODEGAFACTURACION");
+
+                entity.Property(e => e.SmdpBodegarepuestos)
+                    .HasMaxLength(50)
+                    .HasColumnName("SMDP_BODEGAREPUESTOS");
+
+                entity.Property(e => e.SmdpDiasvencereserva).HasColumnName("SMDP_DIASVENCERESERVA");
+
+                entity.Property(e => e.SmdpIdcentrocosto)
+                    .HasMaxLength(20)
+                    .HasColumnName("SMDP_IDCENTROCOSTO");
+
+                entity.Property(e => e.SmdpIdempresa)
+                    .HasMaxLength(15)
+                    .HasColumnName("SMDP_IDEMPRESA");
+
+                entity.Property(e => e.SmdpIdmanoobradefault).HasColumnName("SMDP_IDMANOOBRADEFAULT");
+
+                entity.Property(e => e.SmdpIdmedioot)
+                    .HasMaxLength(5)
+                    .HasColumnName("SMDP_IDMEDIOOT");
+
+                entity.Property(e => e.SmdpIdpadre)
+                    .HasMaxLength(10)
+                    .HasColumnName("SMDP_IDPADRE");
+
+                entity.Property(e => e.SmdpNombre)
+                    .IsRequired()
+                    .HasMaxLength(80)
+                    .HasColumnName("SMDP_NOMBRE");
+
+                entity.Property(e => e.SmdpOtexternas)
+                    .HasColumnName("SMDP_OTEXTERNAS")
+                    .HasDefaultValueSql("((0))");
             });
 
             OnModelCreatingPartial(modelBuilder);
